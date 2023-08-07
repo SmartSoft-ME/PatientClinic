@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Application.Commands.PatientCommand;
 using Application.DTO;
 using Application.IRepositories;
 using Domain;
@@ -13,7 +14,7 @@ builder.Services.AddControllers();
 
 
 
-//builder.Services.AddMediatR(typeof(PatientDto));
+builder.Services.AddMediatR(typeof(CreatePatientCommand).Assembly);
 builder.Services.AddControllers()
     .AddJsonOptions(o =>
        o.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
