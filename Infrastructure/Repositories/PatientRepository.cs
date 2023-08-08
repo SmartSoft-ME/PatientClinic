@@ -39,10 +39,10 @@ namespace Infrastructure.Repositories
         }
         public async Task<Patient> AddInjuryToPatient(int PatientId, string type, string treatment)
         {
-            var patient = await _Patient.FirstOrDefaultAsync(i => i.Id == PatientId)
+            var patient = await _Patient.FirstOrDefaultAsync(p => p.Id == PatientId)
                 ?? throw new NotFoundException( PatientId);
             var injury = new Injury(type, treatment);
-            patient.AddI(injury);
+            patient.AddInjury(injury);
             _context.Update(patient);
             await _context.SaveChangesAsync();
             return patient;

@@ -10,7 +10,7 @@ using infrastructure;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(PatientDbcontext))]
-    [Migration("20230808141411_Init")]
+    [Migration("20230808143607_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -21,22 +21,17 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Injury", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("PatientId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("treatment")
+                    b.Property<string>("Treatment")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("type")
+                    b.Property<string>("Type")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("id");
-
-                    b.HasIndex("PatientId");
+                    b.HasKey("Id");
 
                     b.ToTable("injuries");
                 });
@@ -61,18 +56,34 @@ namespace Infrastructure.Migrations
                     b.ToTable("Patient");
                 });
 
-            modelBuilder.Entity("Domain.Injury", b =>
+            modelBuilder.Entity("InjuryPatient", b =>
                 {
-                    b.HasOne("Domain.Patient", null)
-                        .WithMany("Injuries")
-                        .HasForeignKey("PatientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int>("InjuriesId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PatientsId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("InjuriesId", "PatientsId");
+
+                    b.HasIndex("PatientsId");
+
+                    b.ToTable("InjuryPatient");
                 });
 
-            modelBuilder.Entity("Domain.Patient", b =>
+            modelBuilder.Entity("InjuryPatient", b =>
                 {
-                    b.Navigation("Injuries");
+                    b.HasOne("Domain.Injury", null)
+                        .WithMany()
+                        .HasForeignKey("InjuriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Patient", null)
+                        .WithMany()
+                        .HasForeignKey("PatientsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

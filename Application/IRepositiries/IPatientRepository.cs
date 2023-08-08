@@ -12,6 +12,6 @@ namespace Application.IRepositories
     {
         Task<Patient> AddAsync(Patient entity);
         Task<Patient> UpdateAsync(Patient entity);
-        Task<Patient> AddInjuryToPatient(int PatientId,string type,string treatement);
+        Task<Patient> AddInjuryToPatient(int PatientId,string type,string treatment);
     }
 }

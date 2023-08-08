@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string? Address { get; set; }
+        public string Address { get; set; }
         public int Age { get; set; }
 
         public List<Injury> Injuries { get; set; } = new();
@@ -24,18 +24,20 @@
             Address = address;
             Age = age;
         }
-        public void update(string name, string address, int age)
+        public void Update(string name, string address, int age)
         {
             
             this.Name = name;
             this.Address = address;
             this.Age = age;
         }
-        public void RemoveI(Injury injuries) => Injuries.Remove(injuries);
+        public void RemoveInjury(Injury injuries) => Injuries.Remove(injuries);
 
-        public void AddI(Injury injuries) => Injuries.Add(injuries);
-
-        public void AddI(List<Injury> injuries) => Injuries.AddRange(injuries);
+        public void AddInjury(Injury injury)
+        {
+            Injuries.Add(injury);
+        }
+        public void AddInjuries(List<Injury> injuries) => Injuries.AddRange(injuries);
 
         public void UpdateI(List<Injury> injuries)
         {

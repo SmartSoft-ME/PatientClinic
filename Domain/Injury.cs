@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Formatters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,33 +9,37 @@ namespace Domain
 {
     public class Injury
     {
-        public int id { get; set; }
-        public string type { get; set; }
-        public string treatment { get; set; }
+        public int Id { get; set; }
+        public string Type { get; set; }
+        public string Treatment { get; set; }
 
 
 
+
+
+        public List<Patient> Patients { get; set; } = new(); 
         
-
-        public int PatientId { get; set; } 
-        
-        public Injury(string type, string treatment, int patient)
+        public Injury(string type, string treatment, List<Patient> patient)
         {
 
-            PatientId = patient;
-            this.type = type;
-            this.treatment = treatment;
+            Patients = patient;
+            Type = type;
+            Treatment = treatment;
             
         }
         public Injury(string type, string treatment)
         {
-            this.type = type;
-            this.treatment = treatment;
+            Type = type;
+            Treatment = treatment;
         }
-        public void UpdateI(string type,string treatment)
+        public void UpdateInjury(string type,string treatment)
         {
-            this.treatment = treatment;
-            this.type = type;
+            Treatment = treatment;
+            Type = type;
+        }
+        public void AddPatient(Patient patient)
+        {
+            Patients.Add(patient);
         }
         
     }

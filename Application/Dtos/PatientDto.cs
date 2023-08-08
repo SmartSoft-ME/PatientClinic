@@ -1,6 +1,6 @@
 ﻿namespace Application.DTO
 {
 
-    public record PatientDto(int id, string name, string address, int age, List<int> injuryId);
+    public record PatientDto(int id, string name, string address, int age, List<InjuryDto> Injury);
 
 }

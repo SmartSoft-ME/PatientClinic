@@ -12,7 +12,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Application.Commands.PatientCommand.Handler
 {
-    internal class PatientInjuryHandler
+    public class PatientInjuryHandler :ICommandHandler<PatientInjuryCommand,PatientDto>
     {
         private readonly IPatientRepository _patientRepository;
         public PatientInjuryHandler(IPatientRepository PRepository)
@@ -20,10 +20,10 @@ namespace Application.Commands.PatientCommand.Handler
 
             _patientRepository = PRepository;
         }
-        public async Task<Response<PatientDto>> Handle(PatientInjuryCommand PIC, CancellationToken cancel)
+        public async Task<Response<PatientDto>> Handle(PatientInjuryCommand command, CancellationToken cancel)
         {
-            var (id, type, treatment) = PIC;
-            var patient=await _patientRepository.AddInjuryToPatient(id, type, treatment);
+            var (id, type, treatment) = command;
+            var patient = await _patientRepository.AddInjuryToPatient(id, type, treatment);
             return Response.Success(patient.Adapt<Patient, PatientDto>(), "Injury Added To Patient");
 
         }

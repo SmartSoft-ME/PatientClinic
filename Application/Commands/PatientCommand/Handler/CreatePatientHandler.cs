@@ -37,7 +37,7 @@ namespace Application.Commands.PatientCommand.Handler
             var newPatient = await _patientRepository.AddAsync(patient);
 
             var setter = TypeAdapterConfig<Patient,PatientDto>.NewConfig()
-                 .Map(dest => dest.injuryId, src => src.Injuries.Select(i => i.id)).MaxDepth(2);
+                 .Map(dest => dest.Injury, src => src.Injuries.Select(i => i.Id)).MaxDepth(2);
             return Response.Success(newPatient.Adapt<Patient, PatientDto>(setter.Config),"Patient added successfully");
         }
     }

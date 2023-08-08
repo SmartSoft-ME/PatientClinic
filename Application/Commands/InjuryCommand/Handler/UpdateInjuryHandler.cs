@@ -10,7 +10,7 @@ using Domain;
 
 namespace Application.Commands.InjuryCommand.Handler
 {
-    internal class UpdateInjuryHandler:ICommandHandler<UpdateInjuryCommand,InjuryDto>
+    public class UpdateInjuryHandler:ICommandHandler<UpdateInjuryCommand,InjuryDto>
     {
         private readonly IInjuryRepository _Repository;
         private readonly IPatientRepository _patientRepository;
@@ -25,10 +25,10 @@ namespace Application.Commands.InjuryCommand.Handler
             var (id, type, treatment) = command;
             var injury = await _Repository.GetByIdAsync(id, cancel);
             
-                injury.UpdateI(type, treatment);
+                injury.UpdateInjury(type, treatment);
                 var UpdatedInjury = await _Repository.UpdateAsync(injury);
                
-                return Response.Success(UpdatedInjury.Adapt<Injury, InjuryDto>(),"InjuryUpdated"+UpdatedInjury.treatment);
+                return Response.Success(UpdatedInjury.Adapt<Injury, InjuryDto>(),"InjuryUpdated"+UpdatedInjury.Treatment);
             
         }
     }

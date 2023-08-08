@@ -17,7 +17,7 @@ namespace Application.Queries.PatientQueries.Handler
         {
             var patient=await PRepository.GetByIdAsync(query.id,cancel);
             var setter = TypeAdapterConfig<Patient, PatientDto>.NewConfig()
-                 .Map(dest => dest.injuryId, src => src.Injuries.Select(i => i.id)).MaxDepth(2);
+                 .Map(dest => dest.Injury, src => src.Injuries.Select(i => i.Id)).MaxDepth(2);
             return patient.Adapt<Patient, PatientDto>(setter.Config);
         }
     }

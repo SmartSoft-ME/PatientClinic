@@ -12,9 +12,9 @@ namespace Domain
     {
         public InjuryValidator()
         {
-            RuleFor(i=>i.id).NotEmpty();
-            RuleFor(i => i.type).NotNull();
-            RuleFor(i=>i.treatment).NotEmpty();
+            RuleFor(i=>i.Id).NotEmpty();
+            RuleFor(i => i.Type).NotNull();
+            RuleFor(i=>i.Treatment).NotEmpty();
             
         }
     }

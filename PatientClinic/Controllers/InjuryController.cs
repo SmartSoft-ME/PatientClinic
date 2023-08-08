@@ -7,6 +7,7 @@ using MediatR;
 using Shared;
 using FluentValidation.AspNetCore;
 using FluentValidation;
+using Application.Commands.InjuryCommand;
 
 namespace PatientClinic.Controllers
 {
@@ -38,6 +39,9 @@ namespace PatientClinic.Controllers
             => await _mediator.Send(command, cancel);
         [HttpPut]
         public async Task<Response<InjuryDto>> Update(UpdateInjuryCommand command, CancellationToken cancel)
+            => await _mediator.Send(command, cancel);
+        [HttpPut("Add Patient To Injury")]
+        public async Task<Response<InjuryDto>> AddPatientToInjury(AddPatientInjuryCommand command, CancellationToken cancel)
             => await _mediator.Send(command, cancel);
     }
 }

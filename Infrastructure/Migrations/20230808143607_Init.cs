@@ -11,6 +11,20 @@ namespace Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "injuries",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Type = table.Column<string>(type: "TEXT", nullable: true),
+                    Treatment = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_injuries", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Patient",
                 columns: table => new
                 {
@@ -26,40 +40,46 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "injuries",
+                name: "InjuryPatient",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    type = table.Column<string>(type: "TEXT", nullable: true),
-                    treatment = table.Column<string>(type: "TEXT", nullable: true),
-                    PatientId = table.Column<int>(type: "INTEGER", nullable: false)
+                    InjuriesId = table.Column<int>(type: "INTEGER", nullable: false),
+                    PatientsId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_injuries", x => x.id);
+                    table.PrimaryKey("PK_InjuryPatient", x => new { x.InjuriesId, x.PatientsId });
                     table.ForeignKey(
-                        name: "FK_injuries_Patient_PatientId",
-                        column: x => x.PatientId,
+                        name: "FK_InjuryPatient_Patient_PatientsId",
+                        column: x => x.PatientsId,
                         principalTable: "Patient",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_InjuryPatient_injuries_InjuriesId",
+                        column: x => x.InjuriesId,
+                        principalTable: "injuries",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_injuries_PatientId",
-                table: "injuries",
-                column: "PatientId");
+                name: "IX_InjuryPatient_PatientsId",
+                table: "InjuryPatient",
+                column: "PatientsId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "injuries");
+                name: "InjuryPatient");
 
             migrationBuilder.DropTable(
                 name: "Patient");
+
+            migrationBuilder.DropTable(
+                name: "injuries");
         }
     }
 }

@@ -7,8 +7,8 @@ namespace Application.Commands.InjuryCommand
     {
         public CreateInjuraValidatore() 
         {
-            RuleFor(i => i.type).NotEmpty().NotNull();
-            RuleFor(i => i.treatment).NotEmpty().NotNull();
+            RuleFor(i => i.Type).NotEmpty().NotNull();
+            RuleFor(i => i.Treatment).NotEmpty().NotNull();
         }
     }
 }

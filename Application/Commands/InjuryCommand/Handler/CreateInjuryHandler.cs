@@ -21,10 +21,10 @@ namespace Application.Commands.InjuryCommands.Handler
         }
         public async Task<Response<InjuryDto>> Handle(CreateInjuryCommand command, CancellationToken cancellationToken)
         {
-            var (type, treatment,Patientid) = command;
+            var (type, treatment) = command;
               
           
-            var injurie = new Injury(type, treatment,Patientid);
+            var injurie = new Injury(type, treatment);
            
            
 

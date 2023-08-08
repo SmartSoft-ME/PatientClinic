@@ -23,7 +23,7 @@ namespace Application.Commands.PatientCommand.Handler
             var (id, name, address, age) = UPD;
             var patient = await _patientRepository.GetByIdAsync(id, cancel);
           
-            patient.update(name, address, age);
+            patient.Update(name, address, age);
             var UpdatedPatient=await _patientRepository.UpdateAsync(patient);
             
             return Response.Success(UpdatedPatient.Adapt<Patient, PatientDto>(), "PatientUpdated" + UpdatedPatient.Id);

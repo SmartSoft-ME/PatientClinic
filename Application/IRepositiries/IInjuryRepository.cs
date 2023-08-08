@@ -13,6 +13,7 @@ namespace Application.IRepositories
     {
         Task<Injury> AddAsync(Injury entity);
         Task<Injury> UpdateAsync(Injury entity);
-        
+             
+        Task<Injury> AddPatient(int id,string name,string address,int age);
     }
 }

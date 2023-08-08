@@ -37,6 +37,15 @@ namespace Infrastructure.Repositories
             await _context.SaveChangesAsync();
             return Injury_To_add.Entity;
         }
+        public async Task<Injury> AddPatient(int InjuryId,string name,string address,int age)
+        {
+            var injury = await _Injury.FirstOrDefaultAsync(i => i.Id ==InjuryId);
+            var patient = new Patient(name, address, age);
+            injury.AddPatient(patient);
+            _context.Update(injury);
+            await _context.SaveChangesAsync();
+            return injury;
+        }
     }
 
 }
