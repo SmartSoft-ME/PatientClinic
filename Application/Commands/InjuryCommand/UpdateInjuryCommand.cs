@@ -8,6 +8,6 @@ using System.Threading.Tasks;
 
 namespace Application.Commands.InjuryCommands
 {
-    public record UpdateInjuryCommand(int id, string type, string treatement, List<int> paIds) : ICommand<InjuryDto>;
+    public record UpdateInjuryCommand(int id, string type, string treatement) : ICommand<InjuryDto>;
 }
 

@@ -3,21 +3,33 @@ using Application.Commands.PatientCommand;
 using Application.DTO;
 using Application.IRepositories;
 using Domain;
-using infrastructure;
 using Infrastructure;
+using Infrastructure.Repositories;
 using MediatR;
+using FluentValidation.AspNetCore;
+using System.Reflection;
+using FluentValidation;
+using Shared;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddMediatR(cfg => {
+    cfg.RegisterServicesFromAssembly(typeof(PatientDto).Assembly);
+});
 
-
-
-builder.Services.AddMediatR(typeof(CreatePatientCommand).Assembly);
+builder.Services.AddFluentValidationClientsideAdapters();
+builder.Services.AddInfrastructure();
+builder.Services.AddTransient<IInjuryRepository,InjuryRepository>();
+builder.Services.AddTransient<IPatientRepository,PatientRepository>();
+builder.Services.AddScoped<IValidator<Patient>, PatientValidator>();
+builder.Services.AddScoped<IValidator<Injury>, InjuryValidator>();
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 builder.Services.AddControllers()
     .AddJsonOptions(o =>
        o.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+builder.Services.AddFluentValidationAutoValidation();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

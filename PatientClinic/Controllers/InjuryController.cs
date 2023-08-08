@@ -5,6 +5,8 @@ using Application.Queries.InjuryQueries;
 using Domain;
 using MediatR;
 using Shared;
+using FluentValidation.AspNetCore;
+using FluentValidation;
 
 namespace PatientClinic.Controllers
 {
@@ -12,19 +14,26 @@ namespace PatientClinic.Controllers
     [ApiController]
     public class InjuryController : ControllerBase
     {
+        private readonly IValidator<Injury> _validator;
         private readonly IMediator _mediator;
-        public InjuryController(IMediator mediator)
+        public InjuryController(IMediator mediator, IValidator<Injury> validator)
         {
+            _validator = validator;
             _mediator = mediator;
         }
         [HttpGet]
-        public async Task<List<InjuryDto>> Get([FromQuery] GetAllInjuryQuery query,CancellationToken cancel)
-        => await _mediator.Send(query, cancel);
+        public async Task<List<InjuryDto>> Get([FromQuery] GetAllInjuryQuery query, CancellationToken cancel)
+        {
+            return await _mediator.Send(query, cancel);
+            
+            
+        }
         [HttpGet("Get By Id")]
         public async Task<InjuryDto> GetById([FromQuery] GetInjuryByIdQuery query,CancellationToken cancel)
             => await _mediator.Send(query,cancel);
         [HttpDelete]
-        public async Task delete(DeleteInjuryCommand command,CancellationToken cancel)=> await _mediator.Send(command,cancel);
+        public async Task delete(DeleteInjuryCommand command,CancellationToken cancel)
+            => await _mediator.Send(command,cancel);
         [HttpPost]
         public async Task<Response<InjuryDto>> Create(CreateInjuryCommand command, CancellationToken cancel)
             => await _mediator.Send(command, cancel);

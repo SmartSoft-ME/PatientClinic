@@ -34,5 +34,8 @@ namespace PatientClinic.Controllers
         [HttpPut]
         public async Task<Response<PatientDto>> Update(UpdatePatientCommand command, CancellationToken cancel)
             => await _mediator.Send(command, cancel);
+        [HttpPut("PatientInjury")]
+        public async Task<Response<PatientDto>> UpdateInjury(PatientInjuryCommand command, CancellationToken cancel)
+            => await _mediator.Send(command, cancel);
     }
 }

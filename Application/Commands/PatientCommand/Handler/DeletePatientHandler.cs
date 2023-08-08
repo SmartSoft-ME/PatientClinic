@@ -13,9 +13,14 @@ namespace Application.Commands.PatientCommand.Handler
     internal class DeletePatientHandler : ICommandHandler<DeletePatientCommand, Unit>
     {
         private readonly IPatientRepository _patientRepository;
+        public DeletePatientHandler(IPatientRepository patientR)
+        {
+            _patientRepository=patientR;
+        }
         public async Task<Response<Unit>> Handle(DeletePatientCommand request, CancellationToken cancel)
         {
             var patient = await _patientRepository.GetByIdAsync(request.id, cancel);
+
             if (patient.Injuries != null)
                 foreach (var injury in patient.Injuries)
                     patient.Injuries.Remove(injury);

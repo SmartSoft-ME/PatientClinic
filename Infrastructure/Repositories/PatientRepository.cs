@@ -11,9 +11,10 @@ using Domain;
 using infrastructure;
 
 
+
 namespace Infrastructure.Repositories
 {
-    internal class PatientRepository : BaseRepository<Patient>, IPatientRepository
+    public class PatientRepository : BaseRepository<Patient>, IPatientRepository
     {
         private readonly PatientDbcontext _context;
         private readonly DbSet<Patient> _Patient;
@@ -35,6 +36,17 @@ namespace Infrastructure.Repositories
             var Patient_To_Add = await _Patient.AddAsync(P);
             await _context.SaveChangesAsync();
             return Patient_To_Add.Entity;
+        }
+        public async Task<Patient> AddInjuryToPatient(int PatientId, string type, string treatement)
+        {
+            var patient = await _Patient.FirstOrDefaultAsync(i => i.Id == PatientId)
+                ?? throw new NotFoundExcpetion( PatientId);
+            var injury = new Injury(type, treatement);
+            patient.AddI(injury);
+            _context.Update(patient);
+            await _context.SaveChangesAsync();
+            return patient;
+
         }
     }
 }

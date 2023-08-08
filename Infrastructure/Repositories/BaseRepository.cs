@@ -1,13 +1,13 @@
 ﻿using Application.IRepositories;
 using SQLitePCL;
 using System.Threading;
-using PatientClinic;
+
 using Microsoft.EntityFrameworkCore;
 using infrastructure;
 
 namespace Infrastructure.Repositories
 {
-    internal class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
+    public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
     {
         private readonly PatientDbcontext _context;
         private readonly DbSet<TEntity> _dbset;
@@ -18,7 +18,7 @@ namespace Infrastructure.Repositories
             _dbset = context.Set<TEntity>();
         }
         public async Task<List<TEntity>> GetAllEAsync(CancellationToken cancellationToken) => await _dbset.ToListAsync(cancellationToken);
-        public async Task<TEntity> GetByIdAsync(int id, CancellationToken cancellationToken) => await _dbset.FindAsync(new object?[] { id }, cancellationToken);
+        public async Task<TEntity> GetByIdAsync(int id, CancellationToken cancellationToken) => await _dbset.FindAsync(new object?[] { id },cancellationToken: cancellationToken) ?? throw new NotFoundExcpetion( id);
 
         public async Task DeleteAsync(int id, CancellationToken cancellationToken)
         {

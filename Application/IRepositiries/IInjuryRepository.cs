@@ -13,5 +13,6 @@ namespace Application.IRepositories
     {
         Task<Injury> AddAsync(Injury entity);
         Task<Injury> UpdateAsync(Injury entity);
+        
     }
 }

@@ -7,10 +7,10 @@ using infrastructure;
 
 #nullable disable
 
-namespace PatientClinic.Migrations
+namespace Infrastructure.Migrations
 {
     [DbContext(typeof(PatientDbcontext))]
-    [Migration("20230805133809_Init")]
+    [Migration("20230807124100_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -64,12 +64,12 @@ namespace PatientClinic.Migrations
                     b.Property<int>("Injuriesid")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("PaId")
+                    b.Property<int>("PatientsId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("Injuriesid", "PaId");
+                    b.HasKey("Injuriesid", "PatientsId");
 
-                    b.HasIndex("PaId");
+                    b.HasIndex("PatientsId");
 
                     b.ToTable("InjuryPatient");
                 });
@@ -84,7 +84,7 @@ namespace PatientClinic.Migrations
 
                     b.HasOne("Domain.Patient", null)
                         .WithMany()
-                        .HasForeignKey("PaId")
+                        .HasForeignKey("PatientsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -8,7 +8,8 @@ namespace infrastructure
         public DbSet<Patient> Patient { get; set; }
         public DbSet<Injury> injuries { get; set; }
 
-        public PatientDbcontext() { }
+        public PatientDbcontext(DbContextOptions<PatientDbcontext> options)
+        : base(options) { }
 
         
 

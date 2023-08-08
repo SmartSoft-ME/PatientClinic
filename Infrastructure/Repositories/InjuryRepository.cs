@@ -14,7 +14,7 @@ using infrastructure;
 
 namespace Infrastructure.Repositories
 {
-    internal class InjuryRepository : BaseRepository<Injury>, IInjuryRepository
+    public class InjuryRepository : BaseRepository<Injury>, IInjuryRepository
     {
         private readonly PatientDbcontext _context;
         private readonly DbSet<Injury> _Injury;

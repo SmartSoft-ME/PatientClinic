@@ -21,22 +21,13 @@ namespace Application.Commands.InjuryCommand.Handler
         }
         public async Task<Response<InjuryDto>> Handle(UpdateInjuryCommand UIC,CancellationToken cancel)
         {
-            var (id, type, treatement, patientids) = UIC;
+            var (id, type, treatement) = UIC;
             var injury = await _Irepository.GetByIdAsync(id, cancel);
-            if (patientids is not null)
-            {
-                var NewPa = new List<Patient>();
-                foreach (var patientid in patientids)
-                {
-                    NewPa.Add(await _patientRepository.GetByIdAsync(patientid, cancel));
-                    injury.UpdatePatient(NewPa);
-                }
-            }
+            
                 injury.UpdateI(type, treatement);
                 var UpdatedInjury = await _Irepository.UpdateAsync(injury);
-                var setter = TypeAdapterConfig<Injury, InjuryDto>.NewConfig()
-                 .Map(dest => dest.paids, src => src.Pa.Select(i => i.Id)).MaxDepth(2);
-                return Response.Success(UpdatedInjury.Adapt<Injury, InjuryDto>(setter.Config),"InjuryUpdated"+UpdatedInjury.treatement);
+               
+                return Response.Success(UpdatedInjury.Adapt<Injury, InjuryDto>(),"InjuryUpdated"+UpdatedInjury.treatement);
             
         }
     }

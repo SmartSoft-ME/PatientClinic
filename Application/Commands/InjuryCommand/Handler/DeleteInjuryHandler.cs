@@ -21,10 +21,8 @@ namespace Application.Commands.InjuryCommand.Handler
         public async Task<Response<Unit>> Handle(DeleteInjuryCommand request, CancellationToken cancel)
         {
             var injury = await _Irepository.GetByIdAsync(request.id, cancel);
-            if (injury.Pa != null)
-                foreach (var patient in injury.Pa)
-                    injury.Pa.Remove(patient);
-            await _Irepository.UpdateAsync(injury);
+           
+            
             await _Irepository.DeleteAsync(request.id, cancel);
             return Response.Success(Unit.Value, "Deleted Post");
          }

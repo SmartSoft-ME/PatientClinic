@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
-using infrastructure;
+
 #nullable disable
 
-namespace PatientClinic.Migrations
+namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class Init : Migration
@@ -44,14 +44,14 @@ namespace PatientClinic.Migrations
                 columns: table => new
                 {
                     Injuriesid = table.Column<int>(type: "INTEGER", nullable: false),
-                    PaId = table.Column<int>(type: "INTEGER", nullable: false)
+                    PatientsId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_InjuryPatient", x => new { x.Injuriesid, x.PaId });
+                    table.PrimaryKey("PK_InjuryPatient", x => new { x.Injuriesid, x.PatientsId });
                     table.ForeignKey(
-                        name: "FK_InjuryPatient_Patient_PaId",
-                        column: x => x.PaId,
+                        name: "FK_InjuryPatient_Patient_PatientsId",
+                        column: x => x.PatientsId,
                         principalTable: "Patient",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -64,9 +64,9 @@ namespace PatientClinic.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_InjuryPatient_PaId",
+                name: "IX_InjuryPatient_PatientsId",
                 table: "InjuryPatient",
-                column: "PaId");
+                column: "PatientsId");
         }
 
         /// <inheritdoc />

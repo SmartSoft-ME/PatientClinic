@@ -3,8 +3,6 @@ using CleanApiSample.Infrastructure.Data;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using PatientClinic;
-using PatientClinic.Migrations;
 using System;
 using infrastructure;
 

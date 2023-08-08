@@ -9,12 +9,11 @@
 
         public List<Injury> Injuries { get; set; } = new();
 
-       
+       private Patient() { }
 
         public Patient(string name, string? address, int age)
         {
             
-
             Name = name;
             Address = address;
             Age = age;

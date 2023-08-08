@@ -14,14 +14,14 @@ namespace Domain
 
 
 
-        public List<Patient> Pa { get;  set; } = new();
+        public int PatientId { get; set; } 
 
-       
+        private Injury() { }
        
         public Injury(string type, string treatement)
         {
-            
 
+           
             this.type = type;
             this.treatement = treatement;
             
@@ -31,19 +31,7 @@ namespace Domain
             this.treatement = treatement;
             this.type = type;
         }
-        public void RemoveP(Patient P) => Pa.Remove(P);
-
-        public void AddP(Patient P) => Pa.Add(P);
-
-        public void AddPS(List<Patient> P) => Pa.AddRange(P);
-
-        public void UpdatePatient(List<Patient> pa)
-        {
-            Pa.AddRange(pa?.Where(newItem
-                => !pa.Contains(newItem)) ?? Enumerable.Empty<Patient>());
-            Pa.RemoveAll(oldItem
-                    => !pa?.Contains(oldItem) ?? true);
-        }
+        
     }
 }
 

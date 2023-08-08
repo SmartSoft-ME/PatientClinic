@@ -6,7 +6,7 @@ using infrastructure;
 
 #nullable disable
 
-namespace PatientClinic.Migrations
+namespace Infrastructure.Migrations
 {
     [DbContext(typeof(PatientDbcontext))]
     partial class PatientDbcontextModelSnapshot : ModelSnapshot
@@ -61,12 +61,12 @@ namespace PatientClinic.Migrations
                     b.Property<int>("Injuriesid")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("PaId")
+                    b.Property<int>("PatientsId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("Injuriesid", "PaId");
+                    b.HasKey("Injuriesid", "PatientsId");
 
-                    b.HasIndex("PaId");
+                    b.HasIndex("PatientsId");
 
                     b.ToTable("InjuryPatient");
                 });
@@ -81,7 +81,7 @@ namespace PatientClinic.Migrations
 
                     b.HasOne("Domain.Patient", null)
                         .WithMany()
-                        .HasForeignKey("PaId")
+                        .HasForeignKey("PatientsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

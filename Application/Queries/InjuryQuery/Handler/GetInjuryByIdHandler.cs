@@ -17,9 +17,8 @@ namespace Application.Queries.InjuryQueries.Handler
         public async Task<InjuryDto> Handle(GetInjuryByIdQuery querie, CancellationToken cancel)
         {
             var injury = await Irepository.GetByIdAsync(querie.id, cancel);
-            var setter = TypeAdapterConfig<Injury, InjuryDto>.NewConfig()
-                 .Map(dest => dest.paids, src => src.Pa.Select(p => p.Id)).MaxDepth(2);
-            return injury.Adapt<Injury, InjuryDto>(setter.Config);
+           
+            return injury.Adapt<Injury, InjuryDto>();
 
 
 

@@ -8,37 +8,32 @@ using Mapster;
 using Domain;
 using Application.Commands.PatientCommands;
 using System.Threading;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+
+using FluentValidation;
 
 namespace Application.Commands.PatientCommand.Handler
 {
     internal class CreatePatientHandler:ICommandHandler<CreatePatientCommand,PatientDto>
     {
-        private readonly IInjuryRepository _Irepository;
+        private readonly IValidator<Patient> _validator;
         private readonly IPatientRepository _patientRepository;
-        public CreatePatientHandler(IInjuryRepository Irepository, IPatientRepository Prepository)
+        public CreatePatientHandler( IPatientRepository Prepository,IValidator<Patient> validator)
         {
-            _Irepository = Irepository;
+           _validator=validator;
             _patientRepository = Prepository;
         }
         public async Task<Response<PatientDto>> Handle(CreatePatientCommand CPC,CancellationToken cancel)
         {
-            var (id, name, addresse, age, injuriesId) = CPC;
-           
-            var injury = new List<Injury>();
-            foreach (var injuryids in injuriesId)
-            {
-                injury.Add(await _Irepository.GetByIdAsync(injuryids, cancel));
-            }
-
-           
+            var ( name, addresse, age) = CPC;
 
             var patient = new Patient(name,addresse,age);
-            patient.AddI(injury);
-            var newpa = await _patientRepository.AddAsync(patient);
+            var validation = await _validator.ValidateAsync(patient);
+            if(! validation.IsValid ) { throw new ValidationException(validation.Errors); }
+            var newpatient = await _patientRepository.AddAsync(patient);
 
-            var setter = TypeAdapterConfig<Injury, InjuryDto>.NewConfig()
-                .Map(dest => dest.paids, src => src.Pa.Select(i => i.Id)).MaxDepth(2);
-            return Response.Success(newpa.Adapt<Patient, PatientDto>(setter.Config), "Created patient " + newpa.Id);
+           
+            return Response.Success(newpatient.Adapt<Patient, PatientDto>(),"Patient added succesufly");
         }
     }
 }
