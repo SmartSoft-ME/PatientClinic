@@ -21,17 +21,18 @@ namespace Application.Commands.InjuryCommands.Handler
         }
         public async Task<Response<InjuryDto>> Handle(CreateInjuryCommand command, CancellationToken cancellationToken)
         {
-            var (type, treatment) = command;
-            
+            var (type, treatment,Patientid) = command;
+              
           
-            var injurie = new Injury(type, treatment);
+            var injurie = new Injury(type, treatment,Patientid);
            
            
 
-            var NewInjury = await _IRepository.AddAsync(injurie);
+            var newInjury = await _IRepository.AddAsync(injurie);
+
 
             
-            return Response.Success(NewInjury.Adapt<Injury, InjuryDto>(), "Injury added successfully");
+            return Response.Success(newInjury.Adapt<Injury,InjuryDto>(), "Injury added successfully");
         }
     }
 }

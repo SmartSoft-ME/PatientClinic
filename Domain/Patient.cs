@@ -11,6 +11,12 @@
 
     
         public Patient() { }
+        public Patient(string name, string? address, int age)
+        {
+            Name= name;
+            Address= address;
+            Age= age;
+        }
         public Patient(string name, string? address, int age,List<Injury> injury)
         {
             Injuries = injury;

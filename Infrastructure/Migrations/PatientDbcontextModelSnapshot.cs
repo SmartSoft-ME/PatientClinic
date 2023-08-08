@@ -22,15 +22,18 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("treatement")
-                        .IsRequired()
+                    b.Property<int>("PatientId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("treatment")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("type")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("id");
+
+                    b.HasIndex("PatientId");
 
                     b.ToTable("injuries");
                 });
@@ -48,7 +51,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -56,34 +58,18 @@ namespace Infrastructure.Migrations
                     b.ToTable("Patient");
                 });
 
-            modelBuilder.Entity("InjuryPatient", b =>
+            modelBuilder.Entity("Domain.Injury", b =>
                 {
-                    b.Property<int>("Injuriesid")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("PatientsId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Injuriesid", "PatientsId");
-
-                    b.HasIndex("PatientsId");
-
-                    b.ToTable("InjuryPatient");
+                    b.HasOne("Domain.Patient", null)
+                        .WithMany("Injuries")
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("InjuryPatient", b =>
+            modelBuilder.Entity("Domain.Patient", b =>
                 {
-                    b.HasOne("Domain.Injury", null)
-                        .WithMany()
-                        .HasForeignKey("Injuriesid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Patient", null)
-                        .WithMany()
-                        .HasForeignKey("PatientsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Injuries");
                 });
 #pragma warning restore 612, 618
         }

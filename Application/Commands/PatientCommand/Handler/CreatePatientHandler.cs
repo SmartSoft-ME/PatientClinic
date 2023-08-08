@@ -11,6 +11,7 @@ using System.Threading;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 using FluentValidation;
+using Microsoft.Extensions.Hosting;
 
 namespace Application.Commands.PatientCommand.Handler
 {
@@ -25,21 +26,19 @@ namespace Application.Commands.PatientCommand.Handler
             _patientRepository = PRepository;
             _injuryRepository=injuryRepository;
         }
-        public async Task<Response<PatientDto>> Handle(CreatePatientCommand CPC,CancellationToken cancel)
+        public async Task<Response<PatientDto>> Handle(CreatePatientCommand request,CancellationToken cancel)
         {
-            var ( name, address, age,injuryIds) = CPC;
-            var InjuryPatient = new List<Injury>();
-            foreach(var InjuryId in injuryIds)
-            {
-                InjuryPatient.Add(await _injuryRepository.GetByIdAsync(InjuryId,cancel));
-            }
-            var patient = new Patient(name,address,age,InjuryPatient);
+            var ( name, address, age,injuryIds) = request;
+            
+          
+            var patient = new Patient(name,address,age);
           
            
             var newPatient = await _patientRepository.AddAsync(patient);
 
-           
-            return Response.Success(newPatient.Adapt<Patient, PatientDto>(),"Patient added successfully");
+            var setter = TypeAdapterConfig<Patient,PatientDto>.NewConfig()
+                 .Map(dest => dest.injuryId, src => src.Injuries.Select(i => i.id)).MaxDepth(2);
+            return Response.Success(newPatient.Adapt<Patient, PatientDto>(setter.Config),"Patient added successfully");
         }
     }
 }

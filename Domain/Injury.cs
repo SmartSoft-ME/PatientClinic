@@ -16,12 +16,12 @@ namespace Domain
 
         
 
-        public List<Patient> Patients { get; set; } = new();
-        public Injury() { }
-        public Injury(string type, string treatment, List<Patient> patient)
+        public int PatientId { get; set; } 
+        
+        public Injury(string type, string treatment, int patient)
         {
 
-            Patients = patient;
+            PatientId = patient;
             this.type = type;
             this.treatment = treatment;
             

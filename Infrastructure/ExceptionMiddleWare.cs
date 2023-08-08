@@ -1,8 +1,6 @@
 ﻿using System.Text.Json;
-
 using CleanApiSample.Infrastructure.Data;
 using Shared;
-
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Infrastructure;
