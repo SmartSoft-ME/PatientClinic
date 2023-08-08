@@ -9,11 +9,11 @@
 
         public List<Injury> Injuries { get; set; } = new();
 
-       private Patient() { }
-
-        public Patient(string name, string? address, int age)
+    
+        public Patient() { }
+        public Patient(string name, string? address, int age,List<Injury> injury)
         {
-            
+            Injuries = injury;
             Name = name;
             Address = address;
             Age = age;
@@ -25,17 +25,17 @@
             this.Address = address;
             this.Age = age;
         }
-        public void RemoveI(Injury injurys) => Injuries.Remove(injurys);
+        public void RemoveI(Injury injuries) => Injuries.Remove(injuries);
 
-        public void AddI(Injury injurys) => Injuries.Add(injurys);
+        public void AddI(Injury injuries) => Injuries.Add(injuries);
 
-        public void AddI(List<Injury> injurys) => Injuries.AddRange(injurys);
+        public void AddI(List<Injury> injuries) => Injuries.AddRange(injuries);
 
-        public void UpdateI(List<Injury> injurys)
+        public void UpdateI(List<Injury> injuries)
         {
-            Injuries.AddRange(injurys?.Where(newItem => !injurys.Contains(newItem)) ?? Enumerable.Empty<Injury>());
+            Injuries.AddRange(injuries?.Where(newItem => !injuries.Contains(newItem)) ?? Enumerable.Empty<Injury>());
             Injuries.RemoveAll(oldItem
-                   => !injurys?.Contains(oldItem) ?? true);
+                   => !injuries?.Contains(oldItem) ?? true);
         }
 
     }

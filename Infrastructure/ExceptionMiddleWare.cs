@@ -23,7 +23,7 @@ namespace Infrastructure
             {
                 await next(context);
             }
-            catch (NotFoundExcpetion ex)
+            catch (NotFoundException ex)
             {
                 context.Response.ContentType = "application/json";
                 context.Response.StatusCode = StatusCodes.Status404NotFound;

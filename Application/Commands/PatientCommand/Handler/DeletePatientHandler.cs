@@ -26,7 +26,7 @@ namespace Application.Commands.PatientCommand.Handler
                     patient.Injuries.Remove(injury);
             await _patientRepository.UpdateAsync(patient);
             await _patientRepository.DeleteAsync(request.id, cancel);
-            return Response.Success(Unit.Value, "Treatement done");
+            return Response.Success(Unit.Value, "Treatment done");
         }
     }
 }

@@ -12,22 +12,23 @@ namespace Application.Commands.InjuryCommand.Handler
 {
     internal class UpdateInjuryHandler:ICommandHandler<UpdateInjuryCommand,InjuryDto>
     {
-        private readonly IInjuryRepository _Irepository;
+        private readonly IInjuryRepository _Repository;
         private readonly IPatientRepository _patientRepository;
-        public UpdateInjuryHandler(IInjuryRepository Irepository, IPatientRepository Prepository)
+        public UpdateInjuryHandler(IInjuryRepository Repository, IPatientRepository PRepository)
         {
-            _Irepository = Irepository;
-            _patientRepository = Prepository;
+            _Repository = Repository;
+            _patientRepository = PRepository;
         }
-        public async Task<Response<InjuryDto>> Handle(UpdateInjuryCommand UIC,CancellationToken cancel)
+        public async Task<Response<InjuryDto>> Handle(UpdateInjuryCommand command,CancellationToken cancel)
+
         {
-            var (id, type, treatement) = UIC;
-            var injury = await _Irepository.GetByIdAsync(id, cancel);
+            var (id, type, treatment) = command;
+            var injury = await _Repository.GetByIdAsync(id, cancel);
             
-                injury.UpdateI(type, treatement);
-                var UpdatedInjury = await _Irepository.UpdateAsync(injury);
+                injury.UpdateI(type, treatment);
+                var UpdatedInjury = await _Repository.UpdateAsync(injury);
                
-                return Response.Success(UpdatedInjury.Adapt<Injury, InjuryDto>(),"InjuryUpdated"+UpdatedInjury.treatement);
+                return Response.Success(UpdatedInjury.Adapt<Injury, InjuryDto>(),"InjuryUpdated"+UpdatedInjury.treatment);
             
         }
     }

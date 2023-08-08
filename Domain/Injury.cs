@@ -10,25 +10,30 @@ namespace Domain
     {
         public int id { get; set; }
         public string type { get; set; }
-        public string treatement { get; set; }
+        public string treatment { get; set; }
 
 
 
-        public int PatientId { get; set; } 
+        
 
-        private Injury() { }
-       
-        public Injury(string type, string treatement)
+        public List<Patient> Patients { get; set; } = new();
+        public Injury() { }
+        public Injury(string type, string treatment, List<Patient> patient)
         {
 
-           
+            Patients = patient;
             this.type = type;
-            this.treatement = treatement;
+            this.treatment = treatment;
             
         }
-        public void UpdateI(string type,string treatement)
+        public Injury(string type, string treatment)
         {
-            this.treatement = treatement;
+            this.type = type;
+            this.treatment = treatment;
+        }
+        public void UpdateI(string type,string treatment)
+        {
+            this.treatment = treatment;
             this.type = type;
         }
         

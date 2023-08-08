@@ -1,8 +1,8 @@
 ﻿using Shared;
 namespace Infrastructure
 {
-    public class NotFoundExcpetion:PatientException
+    public class NotFoundException:PatientException
     {
-        public NotFoundExcpetion( int id) : base(   id + " was found.") { }
+        public NotFoundException( int id) : base(   id + " was found.") { }
     }
 }

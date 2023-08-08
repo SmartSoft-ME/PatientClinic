@@ -16,9 +16,9 @@ namespace Infrastructure
             services.AddScoped<IInjuryRepository, InjuryRepository>();
             var folder = Environment.SpecialFolder.LocalApplicationData;
             var path = Environment.GetFolderPath(folder);
-            var connectionstring = "Data Source=" + Path.Join(path, "Patients.db");
+            var connectionString = "Data Source=" + Path.Join(path, "Patients.db");
             services.AddDbContext<PatientDbcontext>(options
-              => options.UseSqlite(connectionstring));
+              => options.UseSqlite(connectionString));
             services.AddHostedService<AppInitializer>();
             return services;
         }

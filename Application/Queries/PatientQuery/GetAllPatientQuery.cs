@@ -9,5 +9,5 @@ using MediatR;
 
 namespace Application.Queries.PatientQueries
 {
-    public record GetAllPatientQuerie: IQuery<List<PatientDto>>;
+    public record GetAllPatientQuery: IQuery<List<PatientDto>>;
 }

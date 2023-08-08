@@ -7,14 +7,14 @@ using Application.DTO;
 
 namespace Application.Queries.PatientQueries.Handler
 {
-    internal class GetAllPatientHandler: IQueryHandler<GetAllPatientQuerie,List<PatientDto>>
+    internal class GetAllPatientHandler: IQueryHandler<GetAllPatientQuery,List<PatientDto>>
     {
         public readonly IPatientRepository PRepository;
         public GetAllPatientHandler(IPatientRepository pRepository)
         {
             this.PRepository = pRepository;
         }
-        public async Task<List<PatientDto>> Handle(GetAllPatientQuerie querie,CancellationToken cancel)
+        public async Task<List<PatientDto>> Handle(GetAllPatientQuery query,CancellationToken cancel)
         {
             var patient = await PRepository.GetAllEAsync(cancel);
 

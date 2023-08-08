@@ -14,11 +14,10 @@ namespace PatientClinic.Controllers
     [ApiController]
     public class InjuryController : ControllerBase
     {
-        private readonly IValidator<Injury> _validator;
+       
         private readonly IMediator _mediator;
-        public InjuryController(IMediator mediator, IValidator<Injury> validator)
+        public InjuryController(IMediator mediator)
         {
-            _validator = validator;
             _mediator = mediator;
         }
         [HttpGet]

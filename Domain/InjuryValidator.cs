@@ -14,8 +14,8 @@ namespace Domain
         {
             RuleFor(i=>i.id).NotEmpty();
             RuleFor(i => i.type).NotNull();
-            RuleFor(i=>i.treatement).NotEmpty();
-            RuleFor(i => i.PatientId).NotEmpty();
+            RuleFor(i=>i.treatment).NotEmpty();
+            
         }
     }
 }

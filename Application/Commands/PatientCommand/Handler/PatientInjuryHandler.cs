@@ -15,15 +15,15 @@ namespace Application.Commands.PatientCommand.Handler
     internal class PatientInjuryHandler
     {
         private readonly IPatientRepository _patientRepository;
-        public PatientInjuryHandler(IPatientRepository Prepository)
+        public PatientInjuryHandler(IPatientRepository PRepository)
         {
 
-            _patientRepository = Prepository;
+            _patientRepository = PRepository;
         }
         public async Task<Response<PatientDto>> Handle(PatientInjuryCommand PIC, CancellationToken cancel)
         {
-            var (id, type, treatement) = PIC;
-            var patient=await _patientRepository.AddInjuryToPatient(id, type, treatement);
+            var (id, type, treatment) = PIC;
+            var patient=await _patientRepository.AddInjuryToPatient(id, type, treatment);
             return Response.Success(patient.Adapt<Patient, PatientDto>(), "Injury Added To Patient");
 
         }

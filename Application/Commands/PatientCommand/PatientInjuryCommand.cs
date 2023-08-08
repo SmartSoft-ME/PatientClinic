@@ -4,6 +4,6 @@ using Shared.Commands;
 
 namespace Application.Commands.PatientCommand
 {
-    public record PatientInjuryCommand(int id,string type,string treatement) : ICommand<PatientDto>;
+    public record PatientInjuryCommand(int id,string type,string treatment) : ICommand<PatientDto>;
 
 }

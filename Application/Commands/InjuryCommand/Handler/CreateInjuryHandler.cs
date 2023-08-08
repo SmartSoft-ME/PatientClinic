@@ -12,31 +12,26 @@ namespace Application.Commands.InjuryCommands.Handler
 {
     internal class CreateInjuryHandler : ICommandHandler<CreateInjuryCommand, InjuryDto>
     {
-        private readonly IInjuryRepository _Irepository;
-        private readonly IValidator<Injury> _validator;
-        public CreateInjuryHandler(IInjuryRepository Irepository,IValidator<Injury> validator)
-        {
-            _validator = validator;
-            _Irepository = Irepository;
-           
-        }
-        public async Task<Response<InjuryDto>> Handle(CreateInjuryCommand CIC, CancellationToken cancellationToken)
-        {
-            var (type, treatement) = CIC;
+        private readonly IInjuryRepository _IRepository;
+      
+        public CreateInjuryHandler(IInjuryRepository IRepository) { 
             
-           
+            _IRepository = IRepository;
+          
+        }
+        public async Task<Response<InjuryDto>> Handle(CreateInjuryCommand command, CancellationToken cancellationToken)
+        {
+            var (type, treatment) = command;
             
           
+            var injurie = new Injury(type, treatment);
+           
+           
+
+            var NewInjury = await _IRepository.AddAsync(injurie);
 
             
-            var injurie = new Injury(type, treatement);
-            var validation= await _validator.ValidateAsync(injurie);    
-            if(!validation.IsValid) { throw new ValidationException(validation.Errors); }
-
-            var newinjury = await _Irepository.AddAsync(injurie);
-
-            
-            return Response.Success(newinjury.Adapt<Injury, InjuryDto>(), "Injury added succesufly");
+            return Response.Success(NewInjury.Adapt<Injury, InjuryDto>(), "Injury added successfully");
         }
     }
 }

@@ -12,12 +12,12 @@ namespace Application.Commands.PatientCommand.Handler
 {
     internal class UpdatePatientHandler: ICommandHandler<UpdatePatientCommand,PatientDto>
     {
-        private readonly IInjuryRepository _Irepository;
+        private readonly IInjuryRepository _IRepository;
         private readonly IPatientRepository _patientRepository;
-        public UpdatePatientHandler(IInjuryRepository Irepository, IPatientRepository Prepository)
+        public UpdatePatientHandler(IInjuryRepository IRepository, IPatientRepository PRepository)
         {
-            _Irepository = Irepository;
-            _patientRepository = Prepository;
+            _IRepository = IRepository;
+            _patientRepository = PRepository;
         }
         public async Task<Response<PatientDto>> Handle(UpdatePatientCommand UPD, CancellationToken cancel) {
             var (id, name, address, age) = UPD;

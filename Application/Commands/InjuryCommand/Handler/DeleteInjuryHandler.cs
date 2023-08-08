@@ -11,20 +11,20 @@ namespace Application.Commands.InjuryCommand.Handler
 {
     internal class DeleteInjuryHandler: ICommandHandler<DeleteInjuryCommand, Unit>
     {
-        private readonly IInjuryRepository _Irepository;
-       
-        public DeleteInjuryHandler(IInjuryRepository Irepository)
+        private readonly IInjuryRepository _IRepository;
+        
+        public DeleteInjuryHandler(IInjuryRepository IRepository)
         {
-            _Irepository = Irepository;
+            _IRepository = IRepository;
             
         }
         public async Task<Response<Unit>> Handle(DeleteInjuryCommand request, CancellationToken cancel)
         {
-            var injury = await _Irepository.GetByIdAsync(request.id, cancel);
+            var injury = await _IRepository.GetByIdAsync(request.id, cancel);
            
             
-            await _Irepository.DeleteAsync(request.id, cancel);
-            return Response.Success(Unit.Value, "Deleted Post");
+            await _IRepository.DeleteAsync(request.id, cancel);
+            return Response.Success(Unit.Value, "Deleted Injury");
          }
 
 

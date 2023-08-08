@@ -9,14 +9,14 @@ namespace Application.Queries.InjuryQueries.Handler
 {
     internal class GetInjuryByIdHandler: IQueryHandler<GetInjuryByIdQuery, InjuryDto>
     {
-        public readonly IInjuryRepository Irepository;
+        public readonly IInjuryRepository IRepository;
         public GetInjuryByIdHandler(IInjuryRepository repository)
         {
-            this.Irepository = repository;
+            this.IRepository = repository;
         }
-        public async Task<InjuryDto> Handle(GetInjuryByIdQuery querie, CancellationToken cancel)
+        public async Task<InjuryDto> Handle(GetInjuryByIdQuery query, CancellationToken cancel)
         {
-            var injury = await Irepository.GetByIdAsync(querie.id, cancel);
+            var injury = await IRepository.GetByIdAsync(query.id, cancel);
            
             return injury.Adapt<Injury, InjuryDto>();
 

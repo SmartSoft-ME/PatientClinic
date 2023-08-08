@@ -21,7 +21,7 @@ namespace PatientClinic.Controllers
             _mediator = mediator;
         }
         [HttpGet]
-        public async Task<List<PatientDto>> Get([FromQuery] GetAllPatientQuerie query, CancellationToken cancel)
+        public async Task<List<PatientDto>> Get([FromQuery] GetAllPatientQuery query, CancellationToken cancel)
         => await _mediator.Send(query, cancel);
         [HttpGet("Get By Id")]
         public async Task<PatientDto> GetById([FromQuery] GetPatientByIdQueries query, CancellationToken cancel)

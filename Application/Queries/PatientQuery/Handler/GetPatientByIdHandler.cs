@@ -13,9 +13,9 @@ namespace Application.Queries.PatientQueries.Handler
         {
             this.PRepository = pRepository;
         }
-        public async Task<PatientDto> Handle(GetPatientByIdQueries GIP,CancellationToken cancel)
+        public async Task<PatientDto> Handle(GetPatientByIdQueries query,CancellationToken cancel)
         {
-            var patient=await PRepository.GetByIdAsync(GIP.id,cancel);
+            var patient=await PRepository.GetByIdAsync(query.id,cancel);
             var setter = TypeAdapterConfig<Patient, PatientDto>.NewConfig()
                  .Map(dest => dest.injuryId, src => src.Injuries.Select(i => i.id)).MaxDepth(2);
             return patient.Adapt<Patient, PatientDto>(setter.Config);

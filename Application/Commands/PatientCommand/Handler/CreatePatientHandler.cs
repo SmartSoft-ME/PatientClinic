@@ -16,24 +16,30 @@ namespace Application.Commands.PatientCommand.Handler
 {
     internal class CreatePatientHandler:ICommandHandler<CreatePatientCommand,PatientDto>
     {
-        private readonly IValidator<Patient> _validator;
+        
         private readonly IPatientRepository _patientRepository;
-        public CreatePatientHandler( IPatientRepository Prepository,IValidator<Patient> validator)
+        private readonly   IInjuryRepository _injuryRepository;
+        public CreatePatientHandler( IPatientRepository PRepository,IInjuryRepository injuryRepository)
         {
-           _validator=validator;
-            _patientRepository = Prepository;
+           
+            _patientRepository = PRepository;
+            _injuryRepository=injuryRepository;
         }
         public async Task<Response<PatientDto>> Handle(CreatePatientCommand CPC,CancellationToken cancel)
         {
-            var ( name, addresse, age) = CPC;
-
-            var patient = new Patient(name,addresse,age);
-            var validation = await _validator.ValidateAsync(patient);
-            if(! validation.IsValid ) { throw new ValidationException(validation.Errors); }
-            var newpatient = await _patientRepository.AddAsync(patient);
+            var ( name, address, age,injuryIds) = CPC;
+            var InjuryPatient = new List<Injury>();
+            foreach(var InjuryId in injuryIds)
+            {
+                InjuryPatient.Add(await _injuryRepository.GetByIdAsync(InjuryId,cancel));
+            }
+            var patient = new Patient(name,address,age,InjuryPatient);
+          
+           
+            var newPatient = await _patientRepository.AddAsync(patient);
 
            
-            return Response.Success(newpatient.Adapt<Patient, PatientDto>(),"Patient added succesufly");
+            return Response.Success(newPatient.Adapt<Patient, PatientDto>(),"Patient added successfully");
         }
     }
 }
